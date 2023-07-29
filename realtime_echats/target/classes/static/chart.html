@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ECharts Line Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.1/dist/echarts.min.js"></script>
+</head>
+<body>
+<div id="chart" style="width: 600px; height: 400px;"></div>
+<script>
+    // 发起Ajax请求获取数据
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/chart', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var data = JSON.parse(xhr.responseText);
+            renderChart(data[0], data[1]);
+        }
+    };
+    xhr.send();
+
+    // 绘制图表
+    function renderChart(xAxisData, yAxisData) {
+        var chart = echarts.init(document.getElementById('chart'));
+
+        var option = {
+            xAxis: {
+                type: 'category',
+                data: xAxisData
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                type: 'line',
+                data: yAxisData
+            }]
+        };
+
+        chart.setOption(option);
+    }
+</script>
+</body>
+</html>

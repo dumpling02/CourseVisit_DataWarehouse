@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <meta charset="UTF-8">
+    <title>实战课程</title>
+<script src="/js/echarts.js"></script>
+</head>
+<body>
+<!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+<div id="main" style="width: 600px;height:400px;"></div>
+<script type="text/javascript" th:inline="javascript">
+
+    //在js读取thymeleaf变量值
+    var data1=[[${data1Json}]];
+    var data2=[[${data2Json}]];
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    // 指定图表的配置项和数据
+    var option = {
+    xAxis: {
+    type: 'category',
+    data: JSON.parse(data1)
+},
+    yAxis: {
+    type: 'value'
+},
+    series: [
+{
+    data: JSON.parse(data2),
+    type: 'line'
+}
+    ]
+};
+
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>
